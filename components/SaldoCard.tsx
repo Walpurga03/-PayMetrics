@@ -79,14 +79,14 @@ export const SaldoCard = () => {
 
           {useMockData && (
             <Box className="mt-3 p-2 bg-yellow-500/20 rounded text-center">
-              <Typography variant="caption" className="text-white">
+              <Typography variant="caption" className="text-yellow-900 dark:text-yellow-100 font-medium">
                 🧪 Entwicklungsmodus - Mock-Daten werden verwendet
               </Typography>
             </Box>
           )}
 
           {lastUpdate && (
-            <Typography variant="caption" className="text-white/60 mt-2 block" suppressHydrationWarning>
+            <Typography variant="caption" className="text-white/80 dark:text-white/60 mt-2 block" suppressHydrationWarning>
               Letzte Aktualisierung: {new Date(lastUpdate).toLocaleTimeString('de-DE')}
             </Typography>
           )}
