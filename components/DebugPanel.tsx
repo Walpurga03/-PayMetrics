@@ -60,14 +60,15 @@ export const DebugPanel = () => {
             />
           </Box>
           
-          <Box>
+          <Box className="flex items-center space-x-2">
             <Typography variant="body2" className="text-gray-600 dark:text-gray-300">
-              Status: <Chip 
-                label={isLoading ? 'Lädt...' : error ? 'Fehler' : 'OK'} 
-                color={isLoading ? 'info' : error ? 'error' : 'success'}
-                size="small"
-              />
+              Status:
             </Typography>
+            <Chip 
+              label={isLoading ? 'Lädt...' : error ? 'Fehler' : 'OK'} 
+              color={isLoading ? 'info' : error ? 'error' : 'success'}
+              size="small"
+            />
           </Box>
           
           <Box>
