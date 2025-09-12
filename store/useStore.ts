@@ -134,8 +134,8 @@ export const useStore = create<StoreState>((set, get) => ({
 
       const data = await response.json();
       
-      // Extrahiere Transaktionen aus Blink API Response
-      const transactions = data?.me?.defaultAccount?.wallets?.[0]?.transactions?.edges?.map(
+      // Extrahiere Transaktionen aus Blink API Response (korrigierte Struktur)
+      const transactions = data?.me?.defaultAccount?.transactions?.edges?.map(
         (edge: any) => edge.node
       ) || [];
       

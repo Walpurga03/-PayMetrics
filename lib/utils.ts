@@ -5,10 +5,10 @@ export interface BlinkTransaction {
   id: string;
   direction: 'SEND' | 'RECEIVE';
   status: string;
-  amount: number;
-  createdAt: string;
-  settlementAmount?: number;
-  settlementCurrency?: string;
+  amount?: number;  // Legacy for mock data
+  createdAt: string | number;  // Can be Unix timestamp or ISO string
+  settlementAmount: number;
+  settlementCurrency: string;
   memo?: string;
 }
 
@@ -42,14 +42,18 @@ export function aggregateDaily(
 
   // Nach Datum gruppieren
   const grouped = groupBy(receivedTransactions, tx => {
-    const date = new Date(tx.createdAt);
+    // Handle both Unix timestamp (number) and ISO string
+    const date = typeof tx.createdAt === 'number' 
+      ? new Date(tx.createdAt * 1000)  // Unix timestamp to Date
+      : new Date(tx.createdAt);        // ISO string to Date
     return date.toISOString().split('T')[0]; // YYYY-MM-DD Format
   });
 
   // Tägliche Daten berechnen
   const dailyData: DailyData[] = Object.entries(grouped)
     .map(([date, txs]) => {
-      const totalSats = txs.reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
+      // Use settlementAmount if available, fallback to amount for mock data
+      const totalSats = txs.reduce((sum, tx) => sum + Math.abs(tx.settlementAmount || tx.amount || 0), 0);
       const euros = (totalSats / 100_000_000) * eurPrice; // Sats zu BTC zu EUR
       
       return {
@@ -147,7 +151,9 @@ export function generateMockTransactions(): BlinkTransaction[] {
         id: `mock_${Date.now()}_${i}_${j}`,
         direction: 'RECEIVE',
         status: 'SUCCESS',
-        amount: Math.floor(Math.random() * 100000) + 10000, // 10k-110k sats (ca. 2.50-27.50€)
+        amount: Math.floor(Math.random() * 100000) + 10000, // Legacy field for backward compatibility
+        settlementAmount: Math.floor(Math.random() * 100000) + 10000, // 10k-110k sats (ca. 2.50-27.50€)
+        settlementCurrency: 'BTC',
         createdAt: txDate.toISOString(),
         memo: `Coffee Purchase #${j + 1}`
       });

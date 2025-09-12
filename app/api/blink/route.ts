@@ -22,22 +22,30 @@ const TRANSACTIONS_QUERY = `
   query($first: Int!, $after: String) {
     me {
       defaultAccount {
-        wallets {
-          transactions(first: $first, after: $after) {
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-            edges {
-              node {
-                id
-                direction
-                status
-                amount
-                createdAt
-                settlementAmount
-                settlementCurrency
-                memo
+        transactions(first: $first, after: $after) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+          edges {
+            node {
+              id
+              direction
+              status
+              settlementAmount
+              settlementCurrency
+              createdAt
+              memo
+              initiationVia {
+                ... on InitiationViaIntraLedger {
+                  counterPartyUsername
+                }
+                ... on InitiationViaLn {
+                  paymentHash
+                }
+                ... on InitiationViaOnChain {
+                  address
+                }
               }
             }
           }
@@ -85,7 +93,7 @@ export async function POST(req: NextRequest) {
       query,
       queryVariables,
       {
-        Authorization: `Bearer ${blinkToken}`,
+        'X-API-KEY': blinkToken,
         'Content-Type': 'application/json',
       }
     );

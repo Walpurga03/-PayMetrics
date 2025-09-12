@@ -79,7 +79,7 @@ export const SaldoCard = () => {
 
           {useMockData && (
             <Box className="mt-3 p-2 bg-yellow-500/20 rounded text-center">
-              <Typography variant="caption" className="text-yellow-900 dark:text-yellow-100 font-medium">
+              <Typography variant="caption" className="text-black font-medium">
                 🧪 Entwicklungsmodus - Mock-Daten werden verwendet
               </Typography>
             </Box>
