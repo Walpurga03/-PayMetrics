@@ -47,9 +47,14 @@ export const DailyChart = () => {
         <Box className="flex items-center justify-between mb-6">
           <Box className="flex items-center space-x-2">
             <TrendingUp className="text-bitcoin-orange" />
-            <Typography variant="h6" className="font-semibold">
-              Tägliche Kaffee-Eingänge
-            </Typography>
+            <Box>
+              <Typography variant="h6" className="font-semibold">
+                Tägliche Kaffee-Eingänge
+              </Typography>
+              <Typography variant="caption" className="text-gray-500">
+                📅 Seit 1. Februar 2024
+              </Typography>
+            </Box>
           </Box>
           
           {/* Statistiken */}

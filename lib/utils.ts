@@ -30,15 +30,28 @@ export interface AggregatedStats {
 
 /**
  * Aggregiert tägliche Transaktionen und berechnet Euro-Werte
+ * Nur Transaktionen ab 1. Februar 2024 werden berücksichtigt
  */
 export function aggregateDaily(
   transactions: BlinkTransaction[], 
   eurPrice: number
 ): DailyData[] {
-  // Nur eingehende, erfolgreiche Transaktionen berücksichtigen
-  const receivedTransactions = transactions.filter(
-    tx => tx.direction === 'RECEIVE' && tx.status === 'SUCCESS'
-  );
+  // Start-Datum: 1. Februar 2024
+  const startDate = new Date('2024-02-01T00:00:00Z');
+  
+  // Nur eingehende, erfolgreiche Transaktionen ab Startdatum berücksichtigen
+  const receivedTransactions = transactions.filter(tx => {
+    if (tx.direction !== 'RECEIVE' || tx.status !== 'SUCCESS') {
+      return false;
+    }
+    
+    // Handle both Unix timestamp (number) and ISO string for date filtering
+    const txDate = typeof tx.createdAt === 'number' 
+      ? new Date(tx.createdAt * 1000)  // Unix timestamp to Date
+      : new Date(tx.createdAt);        // ISO string to Date
+    
+    return txDate >= startDate;
+  });
 
   // Nach Datum gruppieren
   const grouped = groupBy(receivedTransactions, tx => {
@@ -129,15 +142,23 @@ export function formatCurrency(amount: number, currency: 'EUR' | 'BTC' | 'SATS')
 
 /**
  * Generiert Mock-Daten für Entwicklung/Testing
+ * Startet ab 1. Februar 2024 (konsistent mit echten Daten)
  */
 export function generateMockTransactions(): BlinkTransaction[] {
   const mockTransactions: BlinkTransaction[] = [];
+  const startDate = new Date('2024-02-01');
   const now = new Date();
   
-  // Generiere Daten für die letzten 7 Tage
-  for (let i = 6; i >= 0; i--) {
+  // Generiere Daten für jeden Tag seit 1. Februar 2024 bis heute
+  const daysSinceStart = Math.floor((now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  const daysToGenerate = Math.min(daysSinceStart, 30); // Maximal 30 Tage für Performance
+  
+  for (let i = daysToGenerate; i >= 0; i--) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
+    
+    // Nur Daten ab Startdatum
+    if (date < startDate) continue;
     
     // 2-8 Transaktionen pro Tag
     const transactionsPerDay = Math.floor(Math.random() * 7) + 2;
