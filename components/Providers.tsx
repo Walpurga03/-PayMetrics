@@ -2,6 +2,7 @@
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { useState, useEffect } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -36,6 +37,21 @@ const theme = createTheme({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Verhindere Hydration Mismatch durch Client-only Rendering der ThemeProvider
+  if (!isClient) {
+    return (
+      <div suppressHydrationWarning>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

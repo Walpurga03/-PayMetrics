@@ -72,7 +72,7 @@ export const DebugPanel = () => {
           
           <Box>
             <Typography variant="body2" className="text-gray-600 dark:text-gray-300">
-              Letzte Aktualisierung: {lastUpdate ? new Date(lastUpdate).toLocaleTimeString('de-DE') : 'Nie'}
+              Letzte Aktualisierung: <span suppressHydrationWarning>{lastUpdate ? new Date(lastUpdate).toLocaleTimeString('de-DE') : 'Nie'}</span>
             </Typography>
           </Box>
         </Box>
@@ -114,7 +114,7 @@ export const DebugPanel = () => {
             <Typography variant="subtitle2" className="mb-2">
               🔧 Debug-Informationen:
             </Typography>
-            <pre className="text-xs text-gray-600 dark:text-gray-300 overflow-auto">
+            <pre className="text-xs text-gray-600 dark:text-gray-300 overflow-auto" suppressHydrationWarning>
               {JSON.stringify({
                 useMockData,
                 hasError: !!error,
