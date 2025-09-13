@@ -27,7 +27,14 @@ export const DailyChart = () => {
   }
 
   // Custom Tooltip für bessere UX
-  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
+  interface TooltipPayload {
+    payload: {
+      euros: number;
+      transactionCount: number;
+      [key: string]: unknown;
+    };
+  }
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: TooltipPayload[]; label?: string }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
