@@ -250,10 +250,10 @@ export function calculateStats(dailyData: DailyData[]): AggregatedStats {
 /**
  * Berechnet erweiterte Kaffee-spezifische Statistiken mit intelligenter Erkennung
  * @param dailyData - Aggregierte tägliche Daten
- * @param currentBalanceEur - Aktueller Wallet-Saldo in EUR
+// Entfernt: currentBalanceEur wurde nicht verwendet
  */
 export function calculateCoffeeStats(
-  dailyData: DailyData[], 
+  dailyData: DailyData[],
 ): CoffeeStats {
   const coffeePrice = 0.30; // Standard Kaffeepreis in EUR
   

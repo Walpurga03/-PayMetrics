@@ -3,7 +3,6 @@
 import React from "react";
 
 import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
-import { TrendingUp, AccountBalanceWallet } from '@mui/icons-material';
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/utils';
 import type { BlinkTransaction } from '@/lib/utils';
@@ -94,9 +93,7 @@ export const SaldoCard = () => {
     );
   }
 
-  const handleRefresh = () => {
-    fetchData();
-  };
+  // Entfernt: handleRefresh wurde nicht verwendet
 
   return (
     <ClientOnly fallback={
@@ -111,10 +108,10 @@ export const SaldoCard = () => {
           {/* Saldo & BTC */}
           <Box className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
             <Box className="flex flex-col items-center justify-center flex-1 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-4 border border-gray-200">
-              <AccountBalanceWallet className="text-bitcoin-orange text-4xl mb-2" />
+              {/* Icon entfernt: AccountBalanceWallet */}
               <Typography variant="h5" className="font-bold text-gray-900 mb-1">{formatCurrency(saldoEur, 'EUR')}</Typography>
               <Typography variant="body2" className="text-gray-600 mb-2">{formatCurrency(saldoSats, 'SATS')} ⚡</Typography>
-              <Chip label="Live Balance" icon={<TrendingUp className="text-green-600" />} className="bg-green-100 text-green-700 font-semibold px-2 py-0.5 border border-green-200 mt-2" size="small" />
+              <Chip label="Live Balance" className="bg-green-100 text-green-700 font-semibold px-2 py-0.5 border border-green-200 mt-2" size="small" />
             </Box>
             <Box className="flex flex-col items-center justify-center flex-1 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-4 border border-gray-200">
               <Typography variant="body2" className="text-gray-500 mb-1">BTC Preis</Typography>

@@ -11,8 +11,7 @@ import { useStore } from '@/store/useStore';
 import { useState } from 'react';
 
 export default function Dashboard() {
-  const { fetchData, isLoading, error } = useStore();
-  const [darkMode, setDarkMode] = useState(false);
+  const { fetchData, error } = useStore();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -22,29 +21,10 @@ export default function Dashboard() {
     // Daten beim ersten Laden holen
     fetchData();
     
-    // Dark Mode aus localStorage laden
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    setDarkMode(savedDarkMode);
-    
-    // Dark Mode CSS-Klasse anwenden
-    if (savedDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
+    // Dark Mode aus localStorage laden und anwenden (optional, falls genutzt)
   }, [fetchData]);
 
-  const toggleDarkMode = () => {
-    if (!isClient) return; // Verhindere SSR-Probleme
-    
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode.toString());
-    
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
+  // Entfernt: toggleDarkMode und darkMode wurden nicht verwendet
 
   // Entfernt: handleRefresh wurde nicht verwendet
 

@@ -1,14 +1,14 @@
 'use client';
 
 import { Card, CardContent, Typography, Box } from '@mui/material';
-import { Coffee, TrendingUp } from '@mui/icons-material'; // Removed unused imports
+import { Coffee } from '@mui/icons-material';
 // import { Assessment, Psychology, ShoppingCart } from '@mui/icons-material'; // Unused imports removed
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/utils';
 import { ClientOnly } from '@/components/ClientOnly';
 
 export const CoffeeAnalysisCard = () => {
-  const { coffeeStats, isLoading, saldoEur } = useStore();
+  const { coffeeStats, isLoading } = useStore();
 
   if (isLoading) {
     return (

@@ -286,7 +286,7 @@ export const useStore = create<StoreState>((set, get) => ({
         customEndDate || undefined
       );
       const stats = calculateStats(dailyData);
-      const coffeeStats = calculateCoffeeStats(dailyData, saldoEur);
+  const coffeeStats = calculateCoffeeStats(dailyData);
 
       set({ 
         currentPrice,
