@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Typography, Box, Button, Alert } from '@mui/material';
+import { Typography, Box, Alert } from '@mui/material';
 import { Coffee, Refresh, DarkMode, LightMode } from '@mui/icons-material';
 import { SaldoCard } from '@/components/SaldoCard';
 import { DailyChart } from '@/components/DailyChart';
