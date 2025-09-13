@@ -11,13 +11,13 @@ import { ClientOnly } from '@/components/ClientOnly';
 export const SaldoCard = () => {
   const [filterStart, setFilterStart] = React.useState('2025-02-11');
   const [filterEnd, setFilterEnd] = React.useState('2025-09-13');
-  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, fetchData, stats, coffeeStats, fetchTransactions } = useStore();
+  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, stats, coffeeStats, fetchTransactions } = useStore();
   const [showAusgaben, setShowAusgaben] = React.useState(false);
   type OutgoingTx = { date: string; amount: number; currency: string };
   const [outgoingTxs, setOutgoingTxs] = React.useState<OutgoingTx[]>([]);
 
   // Hilfsfunktion: Einzelne Ausgaben-Transaktionen extrahieren
-  function getOutgoingTransactions(transactions: BlinkTransaction[]): OutgoingTx[] {
+  const getOutgoingTransactions = React.useCallback((transactions: BlinkTransaction[]): OutgoingTx[] => {
   // Always enforce minimum start date of 2025-02-11
   const minStartDate = new Date('2025-02-11T00:00:00Z');
   const userStartDate = new Date(filterStart + 'T00:00:00Z');
@@ -44,7 +44,7 @@ export const SaldoCard = () => {
           currency: 'EUR',
         };
       });
-  }
+  }, [filterStart, filterEnd, currentPrice]);
 
   // Lade alle Transaktionen beim Anzeigen der Ausgaben
   React.useEffect(() => {
