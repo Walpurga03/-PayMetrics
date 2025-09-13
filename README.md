@@ -1,3 +1,63 @@
+# PayMetrics – Lightning-powered Coffee Dashboard ☕⚡
+
+Ein modernes Dashboard für Kaffeeverkäufe und Lightning-Zahlungen, optimiert für Cafés, Händler und Bitcoin-Enthusiasten.
+
+---
+
+## Features
+
+- **Live Saldo & BTC-Preis**: Zeigt den aktuellen Euro-Saldo, Satoshi-Bestand und den aktuellen Bitcoin-Kurs.
+- **Kaffee-Analyse**: Intelligente Zählung verkaufter Kaffees, Durchschnittspreis pro Kaffee, Umsatz- und Ausgabenstatistiken.
+- **Tägliche Kaffee-Eingänge**: Übersichtliche Charts und Statistiken zu Einnahmen, Kaffees und Sats pro Tag.
+- **Ausgaben-Tracking**: Detaillierte Liste aller Ausgaben-Transaktionen, filterbar nach Zeitraum.
+- **Dynamische Zeiträume**: Flexible Auswahl von Zeiträumen (aktueller Monat, benutzerdefiniert, all-time).
+- **Responsive & Modern UI**: Optimiert für große Bildschirme, mit professionellem, kontrastreichem Design.
+- **Lightning-Integration**: Direkte Anbindung an die Blink API für Transaktionen und Preisabfrage.
+
+---
+
+## Tech Stack
+
+- **Next.js (App Router)**
+- **React (mit Zustand für State Management)**
+- **Material-UI (MUI) & Tailwind CSS**
+- **TypeScript**
+- **Recharts (Charts & Visualisierung)**
+- **Blink API (Lightning Payments)**
+
+---
+
+## Getting Started
+
+1. **Repository klonen**
+
+   ```bash
+   git clone <repo-url>
+   cd paymetrics
+   ```
+
+2. **Abhängigkeiten installieren**
+
+   ```bash
+   npm install
+   # oder
+   yarn
+   ```
+
+3. **Entwicklungsserver starten**
+
+   ```bash
+   npm run dev
+   # oder
+   yarn dev
+   ```
+
+4. **Dashboard öffnen**
+
+   [http://localhost:3000](http://localhost:3000)
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -34,3 +94,46 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+---
+
+## Projektstruktur
+
+- `app/` – Next.js App Router, Seiten & Layouts
+- `components/` – UI-Komponenten (SaldoCard, CoffeeAnalysisCard, DailyChart, ...)
+- `store/` – Zustand Store (State Management)
+- `lib/` – Hilfsfunktionen & Utilities
+- `public/` – Statische Assets (SVGs, Icons)
+
+---
+
+## Konfiguration & Anpassung
+
+- **Lightning API**: Die Anbindung erfolgt über die Blink API (`/api/blink`). Für produktive Nutzung ggf. API-Keys und Endpunkte anpassen.
+- **Kaffee-Preis**: Standardwert ist 0,30 €. Anpassbar in der State-Logik (`store/useStore.ts`).
+- **Design**: Farben, Schriftgrößen und Layouts sind mit Tailwind und MUI einfach anpassbar.
+
+---
+
+## Deployment
+
+Empfohlen wird das Hosting auf [Vercel](https://vercel.com/) oder jedem Node.js-fähigen Server.
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+## Weiterentwicklung & Support
+
+- **Issues & Feature Requests**: Bitte im GitHub-Repo melden.
+- **Mitmachen**: Pull Requests sind willkommen!
+- **Kontakt**: Für Support oder Fragen: [GitHub Issues](https://github.com/DEIN-REPO)
+
+---
+
+## Lizenz
+
+MIT License – free for personal & commercial use.

@@ -135,11 +135,9 @@ export const useStore = create<StoreState>((set, get) => ({
       else if (data && data.bitcoin && typeof data.bitcoin.eur === 'number') {
         return data.bitcoin.eur;
       } else {
-        console.error('Invalid price data structure from API:', JSON.stringify(data, null, 2));
         throw new Error('Invalid price data structure from API');
       }
     } catch (error) {
-      console.error('Price fetch error:', error);
       throw error;
     }
   },
@@ -174,15 +172,12 @@ export const useStore = create<StoreState>((set, get) => ({
 
           if (!response.ok) {
             consecutiveErrors++;
-            console.warn(`Transactions API Error: ${response.status} (consecutive errors: ${consecutiveErrors}/${maxConsecutiveErrors})`);
-            
             // Bei Fehlern kurz warten bevor nächster Versuch
             if (consecutiveErrors < maxConsecutiveErrors) {
               await new Promise(resolve => setTimeout(resolve, 1000 * consecutiveErrors));
               requestCount++; // Zähle auch fehlgeschlagene Requests
               continue;
             } else {
-              console.error(`Too many consecutive errors (${consecutiveErrors}), stopping pagination`);
               break; // Stoppe bei zu vielen Fehlern, aber gib bereits geladene Daten zurück
             }
           }
@@ -214,29 +209,23 @@ export const useStore = create<StoreState>((set, get) => ({
 
           // Stoppe wenn wir Transaktionen vor 11.02.2025 erreicht haben
           if (hasOldTransactions) {
-            console.log(`Reached transactions before 11.02.2025, stopping pagination at ${allTransactions.length} transactions`);
             break;
           }
         } catch (error) {
           consecutiveErrors++;
-          console.warn(`Request ${requestCount + 1} failed:`, error);
-          
           // Bei Fehlern kurz warten bevor nächster Versuch
           if (consecutiveErrors < maxConsecutiveErrors) {
             await new Promise(resolve => setTimeout(resolve, 1000 * consecutiveErrors));
             requestCount++; // Zähle auch fehlgeschlagene Requests
             continue;
           } else {
-            console.error(`Too many consecutive errors (${consecutiveErrors}), stopping pagination`);
             break;
           }
         }
       }
 
-      console.log(`Fetched ${allTransactions.length} transactions in ${requestCount} requests`);
-      return allTransactions;
+  return allTransactions;
     } catch (error) {
-      console.error('Transactions fetch error:', error);
       return []; // Gib leeres Array zurück statt Exception zu werfen
     }
   },
@@ -254,7 +243,7 @@ export const useStore = create<StoreState>((set, get) => ({
       try {
         currentPrice = await get().fetchPrice();
       } catch (error) {
-        console.warn('Price fetch failed, using 0:', error);
+        // Fehler ignorieren, currentPrice bleibt 0
       }
       
       // Balance und Transaktionen parallel laden mit individueller Fehlerbehandlung
@@ -281,17 +270,12 @@ export const useStore = create<StoreState>((set, get) => ({
       let saldoSats = 0;
       if (balanceResult.status === 'fulfilled') {
         saldoSats = balanceResult.value;
-      } else {
-        console.warn('Balance fetch failed:', balanceResult.reason);
       }
       
       const saldoEur = (saldoSats / 100_000_000) * currentPrice;
 
       // Transaktionen verarbeiten
       const validTransactions = transactionsResult.status === 'fulfilled' ? transactionsResult.value : [];
-      if (transactionsResult.status === 'rejected') {
-        console.warn('Transactions fetch failed:', transactionsResult.reason);
-      }
 
       // Tägliche Daten aggregieren basierend auf timeRange
       const dailyData = aggregateDaily(
@@ -315,7 +299,6 @@ export const useStore = create<StoreState>((set, get) => ({
         lastUpdate: new Date().toISOString()
       });
     } catch (error) {
-      console.error('Data fetch error:', error);
       setError(`Fehler beim Laden der Daten: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
       setLoading(false);
     }
