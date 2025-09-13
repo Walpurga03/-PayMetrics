@@ -10,8 +10,8 @@ import {
   DialogContent, 
   DialogActions,
   Typography,
-  Chip
 } from '@mui/material';
+  // Chip import removed as it is unused
 import { DateRange, CalendarToday, EventNote } from '@mui/icons-material';
 import { useStore } from '@/store/useStore';
 

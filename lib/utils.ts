@@ -254,7 +254,6 @@ export function calculateStats(dailyData: DailyData[]): AggregatedStats {
  */
 export function calculateCoffeeStats(
   dailyData: DailyData[], 
-  currentBalanceEur: number
 ): CoffeeStats {
   const coffeePrice = 0.30; // Standard Kaffeepreis in EUR
   

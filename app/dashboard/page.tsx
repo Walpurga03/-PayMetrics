@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { Typography, Box, Alert } from '@mui/material';
-import { Coffee, Refresh, DarkMode, LightMode } from '@mui/icons-material';
+import { Coffee } from '@mui/icons-material';
 import { SaldoCard } from '@/components/SaldoCard';
 import { DailyChart } from '@/components/DailyChart';
 import { CoffeeAnalysisCard } from '@/components/CoffeeAnalysisCard';

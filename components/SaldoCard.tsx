@@ -2,8 +2,8 @@
 'use client';
 import React from "react";
 
-import { Card, CardContent, Typography, Box, Chip, IconButton } from '@mui/material';
-import { TrendingUp, AccountBalanceWallet, Refresh } from '@mui/icons-material';
+import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
+import { TrendingUp, AccountBalanceWallet } from '@mui/icons-material';
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/utils';
 import type { BlinkTransaction } from '@/lib/utils';
@@ -12,7 +12,7 @@ import { ClientOnly } from '@/components/ClientOnly';
 export const SaldoCard = () => {
   const [filterStart, setFilterStart] = React.useState('2025-02-11');
   const [filterEnd, setFilterEnd] = React.useState('2025-09-13');
-  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, fetchData, stats, dailyData, coffeeStats, fetchTransactions } = useStore();
+  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, fetchData, stats, coffeeStats, fetchTransactions } = useStore();
   const [showAusgaben, setShowAusgaben] = React.useState(false);
   type OutgoingTx = { date: string; amount: number; currency: string };
   const [outgoingTxs, setOutgoingTxs] = React.useState<OutgoingTx[]>([]);
@@ -54,7 +54,7 @@ export const SaldoCard = () => {
         setOutgoingTxs(getOutgoingTransactions(txs));
       });
     }
-  }, [showAusgaben, fetchTransactions, outgoingTxs.length]);
+  }, [showAusgaben, fetchTransactions, outgoingTxs.length, getOutgoingTransactions]);
 
   if (isLoading) {
     return (
