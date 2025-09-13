@@ -23,6 +23,8 @@ export interface DailyData {
   euros: number;
   sats: number;
   transactionCount: number;
+  sentEuros: number;
+  sendCount: number;
 }
 
 export interface Stats {
@@ -31,6 +33,7 @@ export interface Stats {
   totalTransactions: number;
   averageTransactionValue: number;
   dailyAverage: number;
+  totalCoffees: number;
 }
 
 interface StoreState {
@@ -66,6 +69,7 @@ export const useStore = create<StoreState>((set, get) => ({
     totalTransactions: 0,
     averageTransactionValue: 0,
     dailyAverage: 0,
+    totalCoffees: 0,
   },
   coffeeStats: {
     coffeePrice: 0.30,
@@ -191,13 +195,13 @@ export const useStore = create<StoreState>((set, get) => ({
             (edge: any) => edge.node
           ) || [];
         
-          // Prüfe ob wir schon Transaktionen vor Feb 2024 erreicht haben
-          const feb2024 = new Date('2024-02-01T00:00:00Z');
+          // Prüfe ob wir schon Transaktionen vor 11.02.2025 erreicht haben
+          const earliestDate = new Date('2025-02-11T00:00:00Z');
           const hasOldTransactions = pageTransactions.some((tx: any) => {
             const txDate = typeof tx.createdAt === 'number' 
               ? new Date(tx.createdAt * 1000)
               : new Date(tx.createdAt);
-            return txDate < feb2024;
+            return txDate < earliestDate;
           });
 
           allTransactions = [...allTransactions, ...pageTransactions];
@@ -208,9 +212,9 @@ export const useStore = create<StoreState>((set, get) => ({
           cursor = pageInfo?.endCursor;
           requestCount++;
 
-          // Stoppe wenn wir Transaktionen vor Feb 2024 erreicht haben
+          // Stoppe wenn wir Transaktionen vor 11.02.2025 erreicht haben
           if (hasOldTransactions) {
-            console.log(`Reached transactions before Feb 2024, stopping pagination at ${allTransactions.length} transactions`);
+            console.log(`Reached transactions before 11.02.2025, stopping pagination at ${allTransactions.length} transactions`);
             break;
           }
         } catch (error) {

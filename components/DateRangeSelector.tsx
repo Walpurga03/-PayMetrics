@@ -18,7 +18,7 @@ import { useStore } from '@/store/useStore';
 export const DateRangeSelector = () => {
   const { timeRange, customStartDate, customEndDate, toggleTimeRange, setCustomDateRange } = useStore();
   const [open, setOpen] = useState(false);
-  const [tempStartDate, setTempStartDate] = useState(customStartDate || '2025-02-01');
+  const [tempStartDate, setTempStartDate] = useState(customStartDate || '2025-02-11');
   const [tempEndDate, setTempEndDate] = useState(customEndDate || new Date().toISOString().split('T')[0]);
 
   const handleCustomRange = () => {
@@ -100,7 +100,7 @@ export const DateRangeSelector = () => {
               onChange={(e) => setTempStartDate(e.target.value)}
               InputLabelProps={{ shrink: true }}
               inputProps={{ 
-                min: '2025-02-01', // Frühestes Datum: 1. Februar 2025
+                min: '2025-02-11', // Frühestes Datum: 11. Februar 2025
                 max: new Date().toISOString().split('T')[0] // Spätestes Datum: heute
               }}
               fullWidth
@@ -112,56 +112,11 @@ export const DateRangeSelector = () => {
               onChange={(e) => setTempEndDate(e.target.value)}
               InputLabelProps={{ shrink: true }}
               inputProps={{ 
-                min: '2025-02-01', // Frühestes Datum: 1. Februar 2025
+                min: '2025-02-11', // Frühestes Datum: 11. Februar 2025
                 max: new Date().toISOString().split('T')[0] // Spätestes Datum: heute
               }}
               fullWidth
             />
-          </Box>
-
-          {/* Beispiel-Zeiträume */}
-          <Box className="mt-4">
-            <Typography variant="caption" className="text-gray-500 mb-2 block">
-              Schnellauswahl:
-            </Typography>
-            <Box className="flex flex-wrap gap-2">
-              <Chip
-                label="Februar 2025"
-                size="small"
-                onClick={() => {
-                  setTempStartDate('2025-02-01');
-                  setTempEndDate('2025-02-28');
-                }}
-                className="cursor-pointer"
-              />
-              <Chip
-                label="März 2025"
-                size="small"
-                onClick={() => {
-                  setTempStartDate('2025-03-01');
-                  setTempEndDate('2025-03-31');
-                }}
-                className="cursor-pointer"
-              />
-              <Chip
-                label="Q1 2025"
-                size="small"
-                onClick={() => {
-                  setTempStartDate('2025-02-01');
-                  setTempEndDate('2025-03-31');
-                }}
-                className="cursor-pointer"
-              />
-              <Chip
-                label="Seit Anfang"
-                size="small"
-                onClick={() => {
-                  setTempStartDate('2025-02-01');
-                  setTempEndDate(new Date().toISOString().split('T')[0]);
-                }}
-                className="cursor-pointer"
-              />
-            </Box>
           </Box>
         </DialogContent>
 

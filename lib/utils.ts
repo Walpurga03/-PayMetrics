@@ -45,6 +45,7 @@ export interface AggregatedStats {
   totalTransactions: number;
   averageTransactionValue: number;
   dailyAverage: number;
+  totalCoffees: number;
 }
 
 export interface CoffeeStats {
@@ -232,16 +233,18 @@ export function calculateStats(dailyData: DailyData[]): AggregatedStats {
   const totalEuros = dailyData.reduce((sum, day) => sum + day.euros, 0);
   const totalSats = dailyData.reduce((sum, day) => sum + day.sats, 0);
   const totalTransactions = dailyData.reduce((sum, day) => sum + day.transactionCount, 0);
+  const totalCoffees = dailyData.reduce((sum, day) => sum + (day.coffeeCount ?? 0), 0);
   
   const averageTransactionValue = totalTransactions > 0 ? totalEuros / totalTransactions : 0;
   const dailyAverage = dailyData.length > 0 ? totalEuros / dailyData.length : 0;
   
   return {
-    totalEuros: Number(totalEuros.toFixed(2)),
-    totalSats,
-    totalTransactions,
-    averageTransactionValue: Number(averageTransactionValue.toFixed(2)),
-    dailyAverage: Number(dailyAverage.toFixed(2))
+  totalEuros: Number(totalEuros.toFixed(2)),
+  totalSats,
+  totalTransactions,
+  averageTransactionValue: Number(averageTransactionValue.toFixed(2)),
+  dailyAverage: Number(dailyAverage.toFixed(2)),
+  totalCoffees: totalCoffees
   };
 }
 

@@ -65,59 +65,34 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <Container maxWidth="lg" className="py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+      <div className="w-full px-4 py-8 mx-auto max-w-3xl">
         {/* Header */}
-        <Box className="flex items-center justify-between mb-8">
-          <Box className="flex items-center space-x-3">
-            <Coffee className="text-bitcoin-orange text-4xl" />
-            <Box>
-              <Typography variant="h3" className="font-bold text-gray-900 dark:text-white">
-                ☕️ Kaffee Dashboard
-              </Typography>
-              <Typography variant="subtitle1" className="text-gray-600 dark:text-gray-300">
-                Lightning-powered Coffee Payments
-              </Typography>
-            </Box>
-          </Box>
-          
-          <Box className="flex items-center space-x-2">
-            <Button
-              variant="outlined"
-              onClick={handleRefresh}
-              disabled={isLoading}
-              startIcon={<Refresh className={isLoading ? 'animate-spin' : ''} />}
-              className="dark:border-gray-600 dark:text-white"
-            >
-              Aktualisieren
-            </Button>
-            
-            <Button
-              variant="outlined"
-              onClick={toggleDarkMode}
-              startIcon={darkMode ? <LightMode /> : <DarkMode />}
-              className="dark:border-gray-600 dark:text-white"
-            >
-              {darkMode ? 'Hell' : 'Dunkel'}
-            </Button>
-          </Box>
+        <Box className="flex flex-col items-center justify-center mb-8">
+          <Coffee className="text-bitcoin-orange text-5xl mb-2" />
+          <Typography variant="h3" className="font-bold text-gray-900 dark:text-white text-center">
+            ☕️ Kaffee Dashboard
+          </Typography>
+          <Typography variant="subtitle1" className="text-gray-700 dark:text-gray-300 text-center mt-1">
+            Lightning-powered Coffee Payments
+          </Typography>
         </Box>
 
         {/* Error Alert */}
         {error && (
-          <Alert severity="error" className="mb-6">
+          <Alert severity="error" className="mb-6 max-w-lg mx-auto">
             {error}
           </Alert>
         )}
 
         {/* Dashboard Content */}
         <ClientOnly fallback={
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-3xl mx-auto">
             <div className="bg-gray-200 h-32 rounded-lg animate-pulse"></div>
             <div className="bg-gray-200 h-64 rounded-lg animate-pulse"></div>
           </div>
         }>
-          <Box className="space-y-6">
+          <Box className="space-y-6 max-w-3xl mx-auto">
             <SaldoCard />
             <CoffeeAnalysisCard />
             <DailyChart />
@@ -153,7 +128,7 @@ export default function Dashboard() {
             </Box>
           </Box>
         </ClientOnly>
-      </Container>
+      </div>
     </div>
   );
 }
