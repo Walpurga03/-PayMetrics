@@ -46,9 +46,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleRefresh = () => {
-    fetchData();
-  };
+  // Entfernt: handleRefresh wurde nicht verwendet
 
   // Verhindere Hydration Mismatch
   if (!isClient) {

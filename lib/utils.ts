@@ -152,8 +152,7 @@ export function aggregateDaily(
   });
 
   // Separate RECEIVE und SEND Transaktionen für Kaffee-Analyse
-  const receivedTransactions = allTransactions.filter(tx => tx.direction === 'RECEIVE');
-  const sentTransactions = allTransactions.filter(tx => tx.direction === 'SEND');
+  // Entfernt: receivedTransactions und sentTransactions wurden nicht verwendet
 
   // Nach Datum gruppieren
   // Gruppiere alle Transaktionen nach Datum
