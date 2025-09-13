@@ -31,6 +31,7 @@ export const DailyChart = () => {
     payload: {
       euros: number;
       transactionCount: number;
+      coffeeCount?: number;
       [key: string]: unknown;
     };
   }
