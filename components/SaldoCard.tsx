@@ -7,7 +7,7 @@ import { formatCurrency } from '@/lib/utils';
 import { ClientOnly } from '@/components/ClientOnly';
 
 export const SaldoCard = () => {
-  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, useMockData, fetchData } = useStore();
+  const { saldoEur, saldoSats, currentPrice, isLoading, lastUpdate, fetchData } = useStore();
 
   if (isLoading) {
     return (
@@ -31,29 +31,36 @@ export const SaldoCard = () => {
         </CardContent>
       </Card>
     }>
-      <Card className="mb-4 bg-gradient-to-r from-bitcoin-orange to-lightning-blue shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <CardContent className="p-6">
-          <Box className="flex items-center justify-between mb-4">
-            <Box className="flex items-center space-x-3">
-              <AccountBalanceWallet className="text-white text-3xl" />
+      <Card className="mb-6 bg-gradient-to-r from-bitcoin-orange to-lightning-blue shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-yellow-400/20">
+        <CardContent className="p-8">
+          <Box className="flex items-center justify-between mb-6">
+            <Box className="flex items-center space-x-4">
+              <AccountBalanceWallet className="text-white text-5xl drop-shadow-lg" />
               <Box>
-                <Typography variant="h4" className="text-white font-bold">
+                <Typography variant="caption" className="text-white/80 uppercase tracking-wide font-semibold">
+                  💰 Aktueller Kaffee-Shop Saldo
+                </Typography>
+                <Typography variant="h2" className="text-white font-bold text-shadow-lg leading-tight">
                   {formatCurrency(saldoEur, 'EUR')}
                 </Typography>
-                <Typography variant="body2" className="text-white/80">
-                  {formatCurrency(saldoSats, 'SATS')}
+                <Typography variant="h6" className="text-white/90 font-medium">
+                  {formatCurrency(saldoSats, 'SATS')} ⚡
                 </Typography>
               </Box>
             </Box>
-            <Box className="text-right flex items-center space-x-2">
-              <IconButton onClick={handleRefresh} className="text-white" size="small">
-                <Refresh className={isLoading ? 'animate-spin' : ''} />
+            <Box className="text-right flex items-center space-x-3">
+              <IconButton 
+                onClick={handleRefresh} 
+                className="text-white bg-white/20 hover:bg-white/30 transition-colors" 
+                size="large"
+              >
+                <Refresh className={isLoading ? 'animate-spin' : ''} fontSize="large" />
               </IconButton>
               <Chip 
                 icon={<TrendingUp />} 
-                label="Aktueller Saldo" 
-                className="bg-white/20 text-white"
-                size="small"
+                label="Live Balance" 
+                className="bg-green-500/80 text-white font-semibold px-3 py-1"
+                size="medium"
               />
             </Box>
           </Box>
@@ -76,14 +83,6 @@ export const SaldoCard = () => {
               </Typography>
             </Box>
           </Box>
-
-          {useMockData && (
-            <Box className="mt-3 p-2 bg-yellow-500/20 rounded text-center">
-              <Typography variant="caption" className="text-black font-medium">
-                🧪 Entwicklungsmodus - Mock-Daten werden verwendet
-              </Typography>
-            </Box>
-          )}
 
           {lastUpdate && (
             <Typography variant="caption" className="text-white/80 dark:text-white/60 mt-2 block" suppressHydrationWarning>

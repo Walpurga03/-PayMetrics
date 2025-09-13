@@ -1,13 +1,20 @@
 'use client';
 
+import { useEffect } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { TrendingUp, Receipt, Euro, ShowChart } from '@mui/icons-material';
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/utils';
+import { DateRangeSelector } from './DateRangeSelector';
 
 export const DailyChart = () => {
-  const { dailyData, stats, isLoading } = useStore();
+  const { dailyData, stats, isLoading, timeRange, customStartDate, customEndDate, fetchData } = useStore();
+
+  // Daten neu laden wenn sich der Zeitraum ändert
+  useEffect(() => {
+    fetchData();
+  }, [timeRange, fetchData]);
 
   if (isLoading) {
     return (
@@ -45,18 +52,25 @@ export const DailyChart = () => {
     <Card className="mb-4 shadow-lg">
       <CardContent className="p-6">
         <Box className="flex items-center justify-between mb-6">
-          <Box className="flex items-center space-x-2">
+          <Box className="flex items-center space-x-3">
             <TrendingUp className="text-bitcoin-orange" />
             <Box>
               <Typography variant="h6" className="font-semibold">
                 Tägliche Kaffee-Eingänge
               </Typography>
               <Typography variant="caption" className="text-gray-500">
-                📅 Seit 1. Februar 2024
+                {timeRange === 'current-month' && '📅 September 2025'}
+                {timeRange === 'all-time' && '📅 Seit 1. Februar 2025'}
+                {timeRange === 'custom' && customStartDate && customEndDate && 
+                  `📅 ${new Date(customStartDate).toLocaleDateString('de-DE')} - ${new Date(customEndDate).toLocaleDateString('de-DE')}`
+                }
               </Typography>
             </Box>
           </Box>
           
+          {/* Erweiterte Zeitraum-Auswahl */}
+          <DateRangeSelector />
+            
           {/* Statistiken */}
           <div className="flex space-x-4 max-w-md">
             <div className="text-center">

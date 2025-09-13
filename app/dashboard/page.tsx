@@ -2,18 +2,17 @@
 
 import { useEffect } from 'react';
 import { Container, Typography, Box, Button, Alert } from '@mui/material';
-import { Coffee, Refresh, DarkMode, LightMode, Settings } from '@mui/icons-material';
+import { Coffee, Refresh, DarkMode, LightMode } from '@mui/icons-material';
 import { SaldoCard } from '@/components/SaldoCard';
 import { DailyChart } from '@/components/DailyChart';
-import { DebugPanel } from '@/components/DebugPanel';
+import { CoffeeAnalysisCard } from '@/components/CoffeeAnalysisCard';
 import { ClientOnly } from '@/components/ClientOnly';
 import { useStore } from '@/store/useStore';
 import { useState } from 'react';
 
 export default function Dashboard() {
-  const { fetchData, isLoading, error, useMockData, toggleMockData } = useStore();
+  const { fetchData, isLoading, error } = useStore();
   const [darkMode, setDarkMode] = useState(false);
-  const [showDebug, setShowDebug] = useState(true); // Im Development-Modus standardmäßig anzeigen
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -95,24 +94,6 @@ export default function Dashboard() {
             
             <Button
               variant="outlined"
-              onClick={() => setShowDebug(!showDebug)}
-              startIcon={<Settings />}
-              className="dark:border-gray-600 dark:text-white"
-            >
-              Debug
-            </Button>
-            
-            <Button
-              variant="outlined"
-              onClick={toggleMockData}
-              className="dark:border-gray-600 dark:text-white"
-              color={useMockData ? 'warning' : 'primary'}
-            >
-              {useMockData ? '🧪 Mock' : '⚡ Live'}
-            </Button>
-            
-            <Button
-              variant="outlined"
               onClick={toggleDarkMode}
               startIcon={darkMode ? <LightMode /> : <DarkMode />}
               className="dark:border-gray-600 dark:text-white"
@@ -137,12 +118,8 @@ export default function Dashboard() {
           </div>
         }>
           <Box className="space-y-6">
-            {/* Debug Panel - nur in Development */}
-            {showDebug && process.env.NODE_ENV === 'development' && (
-              <DebugPanel />
-            )}
-            
             <SaldoCard />
+            <CoffeeAnalysisCard />
             <DailyChart />
             
             {/* Zusätzliche Info-Karte */}
