@@ -27,12 +27,12 @@ export const DailyChart = () => {
   }
 
   // Custom Tooltip für bessere UX
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
         <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border">
-          <p className="text-gray-600 dark:text-gray-300">{`Datum: ${new Date(label).toLocaleDateString('de-DE')}`}</p>
+          <p className="text-gray-600 dark:text-gray-300">{`Datum: ${label ? new Date(label).toLocaleDateString('de-DE') : ''}`}</p>
           <p className="text-bitcoin-orange font-semibold">
             {`Eingänge: ${formatCurrency(data.euros, 'EUR')}`}
           </p>

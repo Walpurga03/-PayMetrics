@@ -155,7 +155,7 @@ export const useStore = create<StoreState>((set, get) => ({
 
       // Pagination durch alle Transaktionen seit Feb 2024
       while (hasNextPage && requestCount < maxRequests && consecutiveErrors < maxConsecutiveErrors) {
-        const variables: any = { first: 100 };
+  const variables: { first: number; after?: string } = { first: 100 };
         if (cursor) {
           variables.after = cursor;
         }
@@ -187,12 +187,12 @@ export const useStore = create<StoreState>((set, get) => ({
         
           // Extrahiere Transaktionen aus Blink API Response
           const pageTransactions = data?.me?.defaultAccount?.transactions?.edges?.map(
-            (edge: any) => edge.node
+            (edge: { node: BlinkTransaction }) => edge.node
           ) || [];
         
           // Prüfe ob wir schon Transaktionen vor 11.02.2025 erreicht haben
           const earliestDate = new Date('2025-02-11T00:00:00Z');
-          const hasOldTransactions = pageTransactions.some((tx: any) => {
+          const hasOldTransactions = pageTransactions.some((tx: BlinkTransaction) => {
             const txDate = typeof tx.createdAt === 'number' 
               ? new Date(tx.createdAt * 1000)
               : new Date(tx.createdAt);

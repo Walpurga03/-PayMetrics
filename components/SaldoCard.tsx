@@ -6,6 +6,7 @@ import { Card, CardContent, Typography, Box, Chip, IconButton } from '@mui/mater
 import { TrendingUp, AccountBalanceWallet, Refresh } from '@mui/icons-material';
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/utils';
+import type { BlinkTransaction } from '@/lib/utils';
 import { ClientOnly } from '@/components/ClientOnly';
 
 export const SaldoCard = () => {
@@ -17,14 +18,14 @@ export const SaldoCard = () => {
   const [outgoingTxs, setOutgoingTxs] = React.useState<OutgoingTx[]>([]);
 
   // Hilfsfunktion: Einzelne Ausgaben-Transaktionen extrahieren
-  function getOutgoingTransactions(transactions: any[]): OutgoingTx[] {
+  function getOutgoingTransactions(transactions: BlinkTransaction[]): OutgoingTx[] {
   // Always enforce minimum start date of 2025-02-11
   const minStartDate = new Date('2025-02-11T00:00:00Z');
   const userStartDate = new Date(filterStart + 'T00:00:00Z');
   const startDate = userStartDate < minStartDate ? minStartDate : userStartDate;
     const endDate = new Date(filterEnd + 'T23:59:59Z');
     return transactions
-      .filter((tx: any) => {
+  .filter((tx: BlinkTransaction) => {
         if (tx.direction !== 'SEND' || tx.status !== 'SUCCESS') return false;
         const txDate = typeof tx.createdAt === 'number'
           ? new Date(tx.createdAt * 1000)
@@ -32,7 +33,7 @@ export const SaldoCard = () => {
         // Only include transactions from 2025-02-10 onwards
         return txDate >= startDate && txDate <= endDate;
       })
-      .map((tx: any) => {
+  .map((tx: BlinkTransaction) => {
         const sats = Math.abs(tx.settlementAmount || tx.amount || 0);
         const btc = sats / 100_000_000;
         const eur = btc * (typeof currentPrice === 'number' ? currentPrice : 0);
