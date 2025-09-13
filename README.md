@@ -137,3 +137,26 @@ npm start
 ## Lizenz
 
 MIT License – free for personal & commercial use.
+
+---
+
+## Go-Live / Deployment
+
+### Produktiv-Deployment (z.B. Vercel, eigener Server)
+
+1. **Build für Produktion erstellen**
+   ```bash
+   npm run build
+   npm start
+   ```
+   (oder auf Vercel: einfaches Pushen auf das GitHub-Repo genügt)
+
+2. **Domain verbinden**
+   - Bei Vercel: Im Vercel Dashboard unter "Domains" die eigene Domain hinzufügen und auf das Projekt routen.
+   - Eigener Server: Domain beim Hoster auf die Server-IP zeigen lassen.
+
+3. **SSL aktivieren**
+   - Vercel: SSL wird automatisch per Let's Encrypt eingerichtet.
+   - Eigener Server: SSL-Zertifikat z.B. mit [Let's Encrypt](https://letsencrypt.org/) einrichten (z.B. via [Certbot](https://certbot.eff.org/)).
+
+**Hinweis:** Für produktive Lightning-Integration ggf. API-Keys und Endpunkte anpassen (siehe Abschnitt "Konfiguration & Anpassung").
