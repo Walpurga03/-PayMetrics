@@ -1,4 +1,3 @@
-
 'use client';
 import React from "react";
 
@@ -120,14 +119,14 @@ export const SaldoCard = () => {
               <Typography variant="h6" className="text-gray-900 font-semibold">₿ {(saldoSats / 100_000_000).toFixed(8)}</Typography>
             </Box>
           </Box>
-          {/* Gewinn/Verlust */}
+          {/* Trinkgeld / Differenz */}
           <Box className="mt-4 p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200 text-center max-w-2xl mx-auto shadow">
-            <Typography variant="body2" className="text-green-700 font-semibold mb-1">Gewinn/Verlust</Typography>
-            <Typography variant="h5" className={((stats?.totalCoffees ?? 0) * 0.30 - ((stats?.totalEuros ?? 0) - (coffeeStats?.totalSent ?? 0))) >= 0 ? "text-green-600 font-bold" : "text-red-600 font-bold"}>
-              {formatCurrency(((stats?.totalCoffees ?? 0) * 0.30 - ((stats?.totalEuros ?? 0) - (coffeeStats?.totalSent ?? 0))), 'EUR')}
+            <Typography variant="body2" className="text-green-700 font-semibold mb-1">Differenz</Typography>
+            <Typography variant="h5" className={((stats?.totalEuros ?? 0) - (stats?.totalCoffees ?? 0) * 0.30) >= 0 ? "text-green-600 font-bold" : "text-red-600 font-bold"}>
+              {formatCurrency(((stats?.totalEuros ?? 0) - (stats?.totalCoffees ?? 0) * 0.30), 'EUR')}
             </Typography>
             <Typography variant="caption" className="text-gray-600">
-              {stats?.totalCoffees ?? 0} Kaffees x 0,30 € – Eingänge – Ausgaben
+              Eingänge (€) – ({stats?.totalCoffees ?? 0} Kaffees x 0,30 €)
             </Typography>
           </Box>
           {/* Ausgaben Bereich */}

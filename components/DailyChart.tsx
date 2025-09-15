@@ -73,24 +73,6 @@ export const DailyChart = () => {
           </Typography>
           <DateRangeSelector />
         </Box>
-        {/* Statistiken */}
-        <Box className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Box className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 border border-orange-200 text-center shadow flex flex-col items-center">
-            <Euro className="text-bitcoin-orange text-3xl mb-2" />
-            <Typography variant="caption" className="text-gray-500">Gesamt</Typography>
-            <Typography variant="h5" className="font-bold text-bitcoin-orange">{formatCurrency(stats.totalEuros, 'EUR')}</Typography>
-          </Box>
-          <Box className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200 text-center shadow flex flex-col items-center">
-            <ShowChart className="text-green-600 text-3xl mb-2" />
-            <Typography variant="caption" className="text-gray-500">Ø/Tag</Typography>
-            <Typography variant="h5" className="font-bold text-green-600">{formatCurrency(stats.dailyAverage, 'EUR')}</Typography>
-          </Box>
-          <Box className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200 text-center shadow flex flex-col items-center">
-            <Coffee className="text-blue-600 text-3xl mb-2" />
-            <Typography variant="caption" className="text-gray-500">Kaffees</Typography>
-            <Typography variant="h5" className="font-bold text-blue-600">{stats.totalCoffees ?? 0}</Typography>
-          </Box>
-        </Box>
         
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={dailyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
